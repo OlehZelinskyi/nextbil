@@ -1,7 +1,15 @@
 import React from "react";
 
+// Components
+import { Background } from "./components";
+
+// Styles
+import styles from "./styles";
+
 function App() {
-  return <div>Good luck!</div>;
+  const { backgroundColor } = styles;
+
+  return <Background color={backgroundColor}>Hello</Background>;
 }
 
 export default App;
