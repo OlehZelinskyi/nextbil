@@ -15,6 +15,7 @@ export default (props: Props) => {
   const Heading = styled(headingTag as HeadingType)`
     color: ${props.color};
     font: 28px/34px Roboto Bold;
+    margin: 0 auto 35px;
   `;
   return <Heading color={color}>{label}</Heading>;
 };
