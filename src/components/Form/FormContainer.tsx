@@ -8,7 +8,8 @@ const FormContainer = <P extends object>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   return class extends React.Component<P> {
-    private handleSubmit = () => {
+    private handleSubmit = (e: Event) => {
+      e.preventDefault();
       console.log("SUBMIT");
     };
 

@@ -11,6 +11,7 @@ const DecisionGroupWrapper = styled("div")<{ vertical: boolean | undefined }>`
   display: flex;
   flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
   width: 100%;
+  padding-bottom: 20px;
   font: 14px/17px Roboto;
   label {
     padding-right: 10px;
