@@ -8,11 +8,18 @@ const DropDownContainer = styled("div")`
 `;
 
 const DropDownHeader = styled("div")`
+  position: relative;
   border-radius: 8px;
   padding: 18px 18px 15px;
   font: 14px/17px Roboto;
   color: #a2a2a2;
   background: #f5f8fa;
+`;
+
+const Arrow = styled("img")`
+  position: absolute;
+  right: 20px;
+  top: 20px;
 `;
 
 const DropDownListContainer = styled("div")`
@@ -39,7 +46,7 @@ const ListItem = styled("li")`
   }
 `;
 
-const options = ["Mangoes", "Apples", "Oranges"];
+const options = ["Latvia", "Lebanon", "Lesotho", "Liberia", "Libya"];
 
 export default function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +63,8 @@ export default function Dropdown() {
   return (
     <DropDownContainer>
       <DropDownHeader onClick={toggling}>
-        {selectedOption || "Mangoes"}
+        {selectedOption || "Select country"}
+        <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
       </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
