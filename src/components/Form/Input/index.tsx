@@ -8,6 +8,7 @@ export interface Props {
   ico?: JSX.Element;
   error?: string;
   placeholder: string;
+  type: string;
 }
 
 const InputWrapper = styled("div")`
@@ -47,10 +48,13 @@ const Input = styled("input")<{
     outline: none;
     color: #222;
   }
+  ::placeholder {
+    color: ${(props) => props.color};
+  }
 `;
 
 function IcoInput(props: Props) {
-  const { ico, placeholder, error } = props;
+  const { ico, placeholder, error, type } = props;
   const { inputBackground, inactiveTextColor } = styles;
   return (
     <InputWrapper>
@@ -60,6 +64,7 @@ function IcoInput(props: Props) {
         color={inactiveTextColor}
         placeholder={placeholder}
         ico={!!ico}
+        type={type}
       />
       {error && <Error>{error}</Error>}
     </InputWrapper>
