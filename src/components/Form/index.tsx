@@ -31,14 +31,29 @@ function SignUp() {
   return (
     <Form>
       <Heading size={1} label={"Create a new account!"} color={darkTextColor} />
-      <IcoInput placeholder={"Enter your name"} type={"text"} />
-      <IcoInput placeholder={"Email"} ico={<LetterSVG />} type={"email"} />
-      <IcoInput placeholder={"Password"} ico={<LockSVG />} type={"password"} />
-      <Dropdown />
+      <IcoInput
+        placeholder={"Enter your name"}
+        type={"text"}
+        error={"Name is required"}
+      />
+      <IcoInput
+        placeholder={"Email"}
+        ico={<LetterSVG />}
+        type={"email"}
+        error={"Email is required"}
+      />
+      <IcoInput
+        placeholder={"Password"}
+        ico={<LockSVG />}
+        type={"password"}
+        error={"Password is required"}
+      />
+      <Dropdown error={"Country is required"} />
       <DecisionGroup
         vertical={false}
         type={"radio"}
         options={["Male", "Female"]}
+        error={"Sex is required"}
       />
       <DecisionGroup
         vertical={true}
@@ -48,6 +63,7 @@ function SignUp() {
             Accept <Link>terms</Link> and <Link>conditions</Link>
           </span>,
         ]}
+        error={"Accept is required"}
       />
       <Button type={"submit"} disabled={false}>
         Sign Up
