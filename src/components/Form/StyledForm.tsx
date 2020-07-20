@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import FormContainer from "./FormContainer";
 
-const Form = styled.form`
+const StyledForm = styled.form`
   border-radius: 8px;
   background-color: #fff;
   width: 400px;
@@ -11,4 +10,4 @@ const Form = styled.form`
   padding: 30px;
 `;
 
-export default FormContainer(Form);
+export default StyledForm;
