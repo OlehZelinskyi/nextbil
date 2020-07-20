@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Error from "../Error";
+
+export interface Props {
+  error?: string;
+}
 
 const DropDownContainer = styled("div")`
   width: 100%;
@@ -48,7 +53,8 @@ const ListItem = styled("li")`
 
 const options = ["Latvia", "Lebanon", "Lesotho", "Liberia", "Libya"];
 
-export default function Dropdown() {
+export default function Dropdown(props: Props) {
+  const { error } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -61,22 +67,25 @@ export default function Dropdown() {
   };
 
   return (
-    <DropDownContainer>
-      <DropDownHeader onClick={toggling}>
-        {selectedOption || "Select country"}
-        <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
-      </DropDownHeader>
-      {isOpen && (
-        <DropDownListContainer>
-          <DropDownList>
-            {options.map((option) => (
-              <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
-                {option}
-              </ListItem>
-            ))}
-          </DropDownList>
-        </DropDownListContainer>
-      )}
-    </DropDownContainer>
+    <>
+      <DropDownContainer>
+        <DropDownHeader onClick={toggling}>
+          {selectedOption || "Select country"}
+          <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
+        </DropDownHeader>
+        {isOpen && (
+          <DropDownListContainer>
+            <DropDownList>
+              {options.map((option) => (
+                <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
+                  {option}
+                </ListItem>
+              ))}
+            </DropDownList>
+          </DropDownListContainer>
+        )}
+        {error && <Error>{error}</Error>}
+      </DropDownContainer>
+    </>
   );
 }

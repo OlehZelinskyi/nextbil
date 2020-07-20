@@ -3,6 +3,7 @@ import React from "react";
 // Utils
 import styled from "styled-components";
 import styles from "../../../styles";
+import Error from "../../Error";
 
 export interface Props {
   ico?: JSX.Element;
@@ -23,18 +24,11 @@ const IcoWrapper = styled("span")`
   left: 20px;
 `;
 
-const Error = styled("span")`
-  position: absolute;
-  bottom: 5px;
-  font-size: 10px;
-  color: #e82828;
-  left: 5px;
-`;
-
 const Input = styled("input")<{
   background: string;
   color: string;
   ico?: boolean;
+  error?: boolean;
 }>`
   border: none;
   width: 100%;
@@ -42,7 +36,7 @@ const Input = styled("input")<{
   padding: 16px 18px 17px;
   font-size: 14px;
   background-color: ${(props) => props.background};
-  color: ${(props) => props.color};
+  color: ${(props) => (props.error ? props.color : "#222")};
   padding-left: ${(props) => (props.ico ? "50px" : "18px")};
   :focus {
     outline: none;
@@ -65,6 +59,7 @@ function IcoInput(props: Props) {
         placeholder={placeholder}
         ico={!!ico}
         type={type}
+        error={!!error}
       />
       {error && <Error>{error}</Error>}
     </InputWrapper>

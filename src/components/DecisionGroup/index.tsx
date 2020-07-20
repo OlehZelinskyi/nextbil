@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Error from "../Error";
 
 export interface Props {
   type: "radio" | "checkbox";
   options: (string | JSX.Element)[];
   vertical?: boolean;
+  error?: string;
 }
 
 const DecisionGroupWrapper = styled("div")<{ vertical: boolean | undefined }>`
@@ -12,6 +14,7 @@ const DecisionGroupWrapper = styled("div")<{ vertical: boolean | undefined }>`
   flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
   width: 100%;
   padding-bottom: 20px;
+  position: relative;
   font: 14px/17px Roboto;
 `;
 
@@ -84,7 +87,7 @@ const Label = styled("label")`
 `;
 
 function DecisionGroup(props: Props) {
-  const { type, options, vertical } = props;
+  const { type, options, vertical, error } = props;
   return (
     <DecisionGroupWrapper vertical={vertical}>
       {options.map((option: string | JSX.Element) => (
@@ -94,6 +97,7 @@ function DecisionGroup(props: Props) {
           <Label>{option}</Label>
         </DecisionWrapper>
       ))}
+      {error && <Error>{error}</Error>}
     </DecisionGroupWrapper>
   );
 }
