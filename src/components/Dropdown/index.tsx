@@ -1,91 +1,65 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { PureComponent } from "react";
 import Error from "../Error";
+import DropDownContainer from "./DropdownContainer";
+import DropDownHeader from "./DropdownHeader";
+import Arrow from "./Arrow";
+import DropDownListContainer from "./DropdownListContainer";
+import DropDownList from "./DropdownList";
+import ListItem from "./ListItem";
 
 export interface Props {
   error?: string;
+  setSelectedOption: (option: string) => void;
+  value: string;
 }
-
-const DropDownContainer = styled("div")`
-  width: 100%;
-  position: relative;
-  padding-bottom: 20px;
-`;
-
-const DropDownHeader = styled("div")`
-  position: relative;
-  border-radius: 8px;
-  padding: 18px 18px 15px;
-  font: 14px/17px Roboto;
-  color: #a2a2a2;
-  background: #f5f8fa;
-`;
-
-const Arrow = styled("img")`
-  position: absolute;
-  right: 20px;
-  top: 20px;
-`;
-
-const DropDownListContainer = styled("div")`
-  position: absolute;
-  width: 100%;
-  top: 55px;
-`;
-
-const DropDownList = styled("ul")`
-  border-radius: 8px;
-  margin: 0;
-  padding: 5px 0;
-  background: #fff;
-  box-shadow: 0px 3px 8px #00000026;
-`;
-
-const ListItem = styled("li")`
-  list-style: none;
-  font: 14px/32px Roboto;
-  padding: 0 18px;
-  margin: 0;
-  :hover {
-    background: #f5f8f2;
-  }
-`;
 
 const options = ["Latvia", "Lebanon", "Lesotho", "Liberia", "Libya"];
 
-export default function Dropdown(props: Props) {
-  const { error } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const toggling = () => setIsOpen(!isOpen);
-
-  const onOptionClicked = (value: any) => () => {
-    setSelectedOption(value);
-    setIsOpen(false);
-    console.log(selectedOption);
+export default class Dropdown extends PureComponent<Props> {
+  state = {
+    isOpen: false,
   };
 
-  return (
-    <>
-      <DropDownContainer>
-        <DropDownHeader onClick={toggling}>
-          {selectedOption || "Select country"}
-          <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
-        </DropDownHeader>
-        {isOpen && (
-          <DropDownListContainer>
-            <DropDownList>
-              {options.map((option) => (
-                <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
-                  {option}
-                </ListItem>
-              ))}
-            </DropDownList>
-          </DropDownListContainer>
-        )}
-        {error && <Error>{error}</Error>}
-      </DropDownContainer>
-    </>
-  );
+  private setIsOpen = (bool: boolean) => {
+    this.setState({ isOpen: bool });
+  };
+
+  private toggling = () => this.setIsOpen(!this.state.isOpen);
+
+  private onOptionClicked = (option: string) => {
+    const { setSelectedOption } = this.props;
+
+    setSelectedOption(option);
+    this.setIsOpen(false);
+  };
+
+  render() {
+    const { error, value } = this.props;
+    return (
+      <>
+        <DropDownContainer>
+          <DropDownHeader onClick={this.toggling}>
+            {value || "Select country"}
+            <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
+          </DropDownHeader>
+          {this.state.isOpen && (
+            <DropDownListContainer>
+              <DropDownList>
+                {options.map((option) => (
+                  <ListItem
+                    onClick={() => this.onOptionClicked(option)}
+                    key={Math.random()}
+                    value={option}
+                  >
+                    {option}
+                  </ListItem>
+                ))}
+              </DropDownList>
+            </DropDownListContainer>
+          )}
+          {error && <Error>{error}</Error>}
+        </DropDownContainer>
+      </>
+    );
+  }
 }

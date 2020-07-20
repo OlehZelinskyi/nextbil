@@ -10,6 +10,9 @@ export interface Props {
   error?: string;
   placeholder: string;
   type: string;
+  name: string;
+  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
 const InputWrapper = styled("div")`
@@ -48,7 +51,7 @@ const Input = styled("input")<{
 `;
 
 function IcoInput(props: Props) {
-  const { ico, placeholder, error, type } = props;
+  const { ico, placeholder, error, type, name, handleChange, value } = props;
   const { inputBackground, inactiveTextColor } = styles;
   return (
     <InputWrapper>
@@ -60,6 +63,9 @@ function IcoInput(props: Props) {
         ico={!!ico}
         type={type}
         error={!!error}
+        name={name}
+        onChange={handleChange}
+        value={value}
       />
       {error && <Error>{error}</Error>}
     </InputWrapper>

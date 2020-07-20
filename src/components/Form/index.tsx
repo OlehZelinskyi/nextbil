@@ -1,59 +1,56 @@
+import FormContainer from "./FormContainer";
 import React from "react";
-
-// Components
-import Form from "./Form";
-
+import { Heading, DecisionGroup, Button } from "..";
 import IcoInput from "./Input";
-import Heading from "../Heading";
-
-import styles from "../../styles";
-import DecisionGroup from "../DecisionGroup";
-import Button from "../Button";
 import Dropdown from "../Dropdown";
-import styled from "styled-components";
+import styles from "../../styles";
+import StyledForm from "./StyledForm";
+import { LetterSVG, LockSVG } from "./SVGImages";
+import Link from "./Link";
 
-const LockSVG = () => (
-  <img src={`${process.env.PUBLIC_URL}/lock.svg`} alt={"lock-icon"} />
-);
-
-const LetterSVG = () => (
-  <img src={`${process.env.PUBLIC_URL}/letter.svg`} alt={"letter-icon"} />
-);
-
-const Link = styled("span")`
-  color: #0094ff;
-  cursor: pointer;
-`;
-
-function SignUp() {
+const Form = (props: { [key: string]: any }) => {
   const { darkTextColor } = styles;
-
+  const {
+    onSubmit,
+    onInputChange,
+    onSelectOption,
+    onRadioChange,
+    onCheckboxChange,
+    formData: { name, email, password, country, sex, agreements },
+  } = props;
   return (
-    <Form>
+    <StyledForm onSubmit={onSubmit}>
       <Heading size={1} label={"Create a new account!"} color={darkTextColor} />
       <IcoInput
         placeholder={"Enter your name"}
         type={"text"}
-        error={"Name is required"}
+        name={"name"}
+        handleChange={onInputChange}
+        value={name}
       />
       <IcoInput
         placeholder={"Email"}
         ico={<LetterSVG />}
         type={"email"}
-        error={"Email is required"}
+        name={"email"}
+        handleChange={onInputChange}
+        value={email}
       />
       <IcoInput
         placeholder={"Password"}
         ico={<LockSVG />}
         type={"password"}
-        error={"Password is required"}
+        name={"password"}
+        handleChange={onInputChange}
+        value={password}
       />
-      <Dropdown error={"Country is required"} />
+      <Dropdown value={country} setSelectedOption={onSelectOption} />
       <DecisionGroup
         vertical={false}
         type={"radio"}
+        value={sex}
         options={["Male", "Female"]}
-        error={"Sex is required"}
+        handleRadioChange={onRadioChange}
       />
       <DecisionGroup
         vertical={true}
@@ -63,13 +60,14 @@ function SignUp() {
             Accept <Link>terms</Link> and <Link>conditions</Link>
           </span>,
         ]}
-        error={"Accept is required"}
+        handleRadioChange={onCheckboxChange}
+        value={agreements}
       />
       <Button type={"submit"} disabled={false}>
         Sign Up
       </Button>
-    </Form>
+    </StyledForm>
   );
-}
+};
 
-export default SignUp;
+export default FormContainer(Form);
