@@ -10,7 +10,7 @@ export const MESSAGE = 'message'
 
 export const VALIDATE_CONFIG = {
   [NAME]: {
-    [VALIDATE]: (data: string) => /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g.test(data) && data.length <= 20,
+    [VALIDATE]: (data: string) => /^[a-zA-Z]+$/g.test(data) && data.length <= 20,
     [MESSAGE]: 'Please enter a valid name!'
   },
   [EMAIL]: {
@@ -18,8 +18,8 @@ export const VALIDATE_CONFIG = {
     [MESSAGE]: 'Please enter a valid email!'
   },
   [PASSWORD]: {
-    [VALIDATE]: (data: string) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g.test(data) && data.length <= 30,
-    [MESSAGE]: 'Password must consist at least of 8 charachers and contain letters (min. 1 UPPERCASE) and numbers!'
+    [VALIDATE]: (data: string) => /^.{6,}$/g.test(data) && data.length <= 30,
+    [MESSAGE]: 'Password must consist at least of 6 charachers '
 
   },
   [COUNTRY]: {
