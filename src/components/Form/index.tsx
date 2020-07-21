@@ -9,6 +9,7 @@ import { LetterSVG, LockSVG } from "./SVGImages";
 import Link from "./Link";
 import FormValidation from "./FormValidation";
 import { hasErrors } from "../../utils";
+import Loader from "../Loader";
 
 const Form = (props: { [key: string]: any; validate?: () => void }) => {
   const { darkTextColor } = styles;
@@ -85,7 +86,7 @@ const Form = (props: { [key: string]: any; validate?: () => void }) => {
         error={showError(errors.agreements)}
       />
       <Button type={"submit"} disabled={submitting || hasErrors(errors)}>
-        Sign Up
+        {submitting ? <Loader /> : <span>Sign Up</span>}
       </Button>
     </StyledForm>
   );
