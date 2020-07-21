@@ -55,7 +55,7 @@ function IcoInput(props: Props) {
   const { inputBackground, inactiveTextColor } = styles;
   return (
     <InputWrapper>
-      {ico && <IcoWrapper>{ico}</IcoWrapper>}
+      {ico && <IcoWrapper data-testid="ico-input">{ico}</IcoWrapper>}
       <Input
         background={inputBackground}
         color={inactiveTextColor}

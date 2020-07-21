@@ -64,6 +64,7 @@ const Form = (props: { [key: string]: any; validate?: () => void }) => {
         value={country}
         setSelectedOption={onSelectOption}
         error={showError(errors.country)}
+        options={["Latvia", "Lebanon", "Lesotho", "Liberia", "Libya"]}
       />
       <DecisionGroup
         vertical={false}
