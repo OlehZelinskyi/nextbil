@@ -7,8 +7,10 @@ import styles from "../../styles";
 import StyledForm from "./StyledForm";
 import { LetterSVG, LockSVG } from "./SVGImages";
 import Link from "./Link";
+import FormValidation from "./FormValidation";
+import { hasErrors } from "../../utils";
 
-const Form = (props: { [key: string]: any }) => {
+const Form = (props: { [key: string]: any; validate?: () => void }) => {
   const { darkTextColor } = styles;
   const {
     onSubmit,
@@ -16,7 +18,17 @@ const Form = (props: { [key: string]: any }) => {
     onSelectOption,
     onRadioChange,
     onCheckboxChange,
-    formData: { name, email, password, country, sex, agreements },
+    showError,
+    formData: {
+      name,
+      email,
+      password,
+      country,
+      sex,
+      agreements,
+      errors,
+      submitting,
+    },
   } = props;
   return (
     <StyledForm onSubmit={onSubmit}>
@@ -27,6 +39,7 @@ const Form = (props: { [key: string]: any }) => {
         name={"name"}
         handleChange={onInputChange}
         value={name}
+        error={showError(errors.name)}
       />
       <IcoInput
         placeholder={"Email"}
@@ -35,6 +48,7 @@ const Form = (props: { [key: string]: any }) => {
         name={"email"}
         handleChange={onInputChange}
         value={email}
+        error={showError(errors.email)}
       />
       <IcoInput
         placeholder={"Password"}
@@ -43,14 +57,20 @@ const Form = (props: { [key: string]: any }) => {
         name={"password"}
         handleChange={onInputChange}
         value={password}
+        error={showError(errors.password)}
       />
-      <Dropdown value={country} setSelectedOption={onSelectOption} />
+      <Dropdown
+        value={country}
+        setSelectedOption={onSelectOption}
+        error={showError(errors.country)}
+      />
       <DecisionGroup
         vertical={false}
         type={"radio"}
         value={sex}
         options={["Male", "Female"]}
         handleRadioChange={onRadioChange}
+        error={showError(errors.sex)}
       />
       <DecisionGroup
         vertical={true}
@@ -62,12 +82,13 @@ const Form = (props: { [key: string]: any }) => {
         ]}
         handleRadioChange={onCheckboxChange}
         value={agreements}
+        error={showError(errors.agreements)}
       />
-      <Button type={"submit"} disabled={false}>
+      <Button type={"submit"} disabled={submitting || hasErrors(errors)}>
         Sign Up
       </Button>
     </StyledForm>
   );
 };
 
-export default FormContainer(Form);
+export default FormValidation(FormContainer(Form));
