@@ -11,9 +11,8 @@ export interface Props {
   error?: string;
   setSelectedOption: (option: string) => void;
   value: string;
+  options: string[];
 }
-
-const options = ["Latvia", "Lebanon", "Lesotho", "Liberia", "Libya"];
 
 export default class Dropdown extends PureComponent<Props> {
   state = {
@@ -34,19 +33,23 @@ export default class Dropdown extends PureComponent<Props> {
   };
 
   render() {
-    const { error, value } = this.props;
+    const { error, value, options } = this.props;
     return (
       <>
         <DropDownContainer>
-          <DropDownHeader onClick={this.toggling}>
+          <DropDownHeader
+            onClick={this.toggling}
+            data-testid={"dropdown-header"}
+          >
             {value || "Select country"}
             <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />
           </DropDownHeader>
           {this.state.isOpen && (
-            <DropDownListContainer>
+            <DropDownListContainer data-testid={"dropdown-list"}>
               <DropDownList>
                 {options.map((option) => (
                   <ListItem
+                    data-testid={"list-item"}
                     onClick={() => this.onOptionClicked(option)}
                     key={Math.random()}
                     value={option}

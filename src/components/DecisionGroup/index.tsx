@@ -24,6 +24,7 @@ function DecisionGroup(props: Props) {
       {options.map((option: string | JSX.Element) => (
         <DecisionWrapper key={Math.random()} type={type}>
           <Input
+            data-testid={option}
             type={type}
             checked={isChecked(option)}
             value={type === "checkbox" ? value : (option as string)}
