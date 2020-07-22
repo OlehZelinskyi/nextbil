@@ -33,7 +33,9 @@ const Form = (props: { [key: string]: any; validate?: () => void }) => {
   } = props;
   return (
     <StyledForm onSubmit={onSubmit}>
-      <Heading size={1} label={"Create a new account!"} color={darkTextColor} />
+      <Heading size={28} color={darkTextColor}>
+        Create a new account!
+      </Heading>
       <IcoInput
         placeholder={"Enter your name"}
         type={"text"}
