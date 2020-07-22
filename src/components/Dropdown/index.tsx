@@ -40,6 +40,8 @@ export default class Dropdown extends PureComponent<Props> {
           <DropDownHeader
             onClick={this.toggling}
             data-testid={"dropdown-header"}
+            error={!!error}
+            value={!!value}
           >
             {value || "Select country"}
             <Arrow src={process.env.PUBLIC_URL + "/arrow.svg"} />

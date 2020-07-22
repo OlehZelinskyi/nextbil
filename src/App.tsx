@@ -7,13 +7,22 @@ import { Background } from "./components";
 import styles from "./styles";
 import Form from "./components/Form";
 
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+const client = new ApolloClient({
+  uri: "http://homework.nextbil.com/graphql",
+});
+
 function App() {
   const { backgroundColor } = styles;
 
   return (
-    <Background color={backgroundColor}>
-      <Form />
-    </Background>
+    <ApolloProvider client={client}>
+      <Background color={backgroundColor}>
+        <Form />
+      </Background>
+    </ApolloProvider>
   );
 }
 
