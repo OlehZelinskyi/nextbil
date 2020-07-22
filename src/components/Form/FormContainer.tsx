@@ -10,6 +10,7 @@ export interface State {
   agreements: boolean;
   errors: { [key: string]: true | string };
   submitting: boolean;
+  response: any;
 }
 
 const FormContainer = <P extends object>(
@@ -32,21 +33,44 @@ const FormContainer = <P extends object>(
         agreements: true,
       },
       submitting: false,
+      response: null,
     } as State;
 
-    private handleSubmit = async (e: Event) => {
+    // TODO: need refactor this stuff
+    private handleSubmit = async (cb: any, e: Event) => {
       e.preventDefault();
-      const { errors, submitting, ...cleanedData } = this.state;
+      const { errors, submitting, response, ...cleanedData } = this.state;
       const validated = await this.validateData(cleanedData);
 
       if (hasErrors(validated)) {
         return;
       }
       await this.setState({ submitting: true });
-      await setTimeout(() => {
-        this.setState({ submitting: false });
-        console.log("submitted");
-      }, 10000);
+      const { name, email, password, country, sex } = cleanedData;
+      try {
+        const {
+          data: { signup },
+        } = await cb({
+          variables: {
+            user: {
+              name,
+              email,
+              password,
+              country,
+              gender: sex?.toUpperCase(),
+            },
+          },
+        });
+
+        await this.setState({
+          response: signup,
+        });
+      } catch (e) {
+        await this.setState({
+          response: { error: e.message },
+        });
+      }
+      this.setState({ submitting: false });
     };
 
     private validateData = (data: { [key: string]: any }) => {
